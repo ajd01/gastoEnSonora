@@ -15,21 +15,38 @@ export default class InitialForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      MODALIDAD: '',
+      MUNICIPIO: '',
+      MUNICIPIOSList: this.makeItems('MUNICIPIO'),
+      TIPO_CONTRATO: '',
+      TIPO_CONTRATOSList: this.makeItems('TIPO_CONTRATO'),
+      TIPO_OBRA: '',
+      TIPO_OBRASList: this.makeItems('TIPO_OBRA'),
+      ORGANISMO: '',
+      ORGANISMOSList: this.makeItems('ORGANISMO'),
+      CONTRATISTA: '',
+      CONTRATISTASList: this.makeItems('CONTRATISTA'),
+      RESIDENTE: '',
+      RESIDENTESList: this.makeItems('RESIDENTE'),
+      submited: false,
+    };
+  }
+
+  resetSelection() {
+    this.setState({
+      MUNICIPIO: '',
       TIPO_CONTRATO: '',
       TIPO_OBRA: '',
-      MUNICIPIO: '',
-      LOCALIDAD: '',
       ORGANISMO: '',
       CONTRATISTA: '',
       RESIDENTE: '',
-      FECHA_CONTRATO: '',
-      FECHA_ENTREGA: '',
       submited: false,
-      MUNICIPIOSList: _.uniqBy(dataSonora, 'MUNICIPIO').map(d => {
-        return {label: d.MUNICIPIO, value: d.MUNICIPIO};
-      }),
-    };
+    });
+  }
+
+  makeItems(key) {
+    return _.uniqBy(dataSonora, key).map(d => {
+      return {label: d[key], value: d[key]};
+    });
   }
 
   render() {
@@ -39,26 +56,75 @@ export default class InitialForm extends Component {
           <Text style={styles.text}>
             Selecciona los datos deseados para filtrar:
           </Text>
+          <RNPickerSelect
+            onValueChange={MUNICIPIO => this.setState({MUNICIPIO})}
+            placeholder={{label: 'Selecciona un municipio...'}}
+            style={pickerStyle}
+            items={this.state.MUNICIPIOSList}
+          />
+          <RNPickerSelect
+            onValueChange={TIPO_CONTRATO => this.setState({TIPO_CONTRATO})}
+            placeholder={{label: 'Selecciona un tipo de contrado...'}}
+            style={pickerStyle}
+            items={this.state.TIPO_CONTRATOSList}
+          />
+          <RNPickerSelect
+            onValueChange={TIPO_OBRA => this.setState({TIPO_OBRA})}
+            placeholder={{label: 'Selecciona un tipo de obras...'}}
+            style={pickerStyle}
+            items={this.state.TIPO_OBRASList}
+          />
+          <RNPickerSelect
+            onValueChange={ORGANISMO => this.setState({ORGANISMO})}
+            placeholder={{label: 'Selecciona un organismo...'}}
+            style={pickerStyle}
+            items={this.state.ORGANISMOSList}
+          />
+          <RNPickerSelect
+            onValueChange={CONTRATISTA => this.setState({CONTRATISTA})}
+            placeholder={{label: 'Selecciona un contratista...'}}
+            style={pickerStyle}
+            items={this.state.CONTRATISTASList}
+          />
+          <RNPickerSelect
+            onValueChange={RESIDENTE => this.setState({RESIDENTE})}
+            placeholder={{label: 'Selecciona un residente...'}}
+            style={pickerStyle}
+            items={this.state.RESIDENTESList}
+          />
           <View>
-            <RNPickerSelect
-              onValueChange={MUNICIPIO => this.setState({MUNICIPIO})}
-              placeholder={{label: 'Selecciona un municipio...'}}
-              style={pickerStyle}
-              items={this.state.MUNICIPIOSList}
-            />
             <TouchableOpacity
               style={styles.saveButton}
               onPress={() => {
-                // eslint-disable-next-line no-alert
-                alert(this.state.MUNICIPIO);
+                this.setState({submited: true});
               }}>
-              <Text style={styles.saveButtonText}>Save</Text>
+              <Text style={styles.saveButtonText}>Buscar Obras</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
       );
     } else {
-      return <SearchResults />;
+      return (
+        <SafeAreaView>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={() => {
+              this.resetSelection();
+            }}>
+            <Text style={styles.saveButtonText}>Regresar</Text>
+          </TouchableOpacity>
+          <SearchResults
+            filterBy={{
+              MUNICIPIO: this.state.MUNICIPIO,
+              TIPO_CONTRATO: this.state.TIPO_CONTRATO,
+              TIPO_OBRA: this.state.TIPO_OBRA,
+              ORGANISMO: this.state.ORGANISMO,
+              CONTRATISTA: this.state.CONTRATISTA,
+              RESIDENTE: this.state.RESIDENTE,
+            }}
+          />
+        </SafeAreaView>
+      );
     }
   }
 }

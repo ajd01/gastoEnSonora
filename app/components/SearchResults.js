@@ -1,33 +1,40 @@
 import React, {Component} from 'react';
 import dataSonora from '../../obrasSonora2018.json';
 import {formatNumber} from '../../app/utils';
-
+import _ from 'lodash';
 import {SafeAreaView, StyleSheet, ScrollView, View, Text} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default class SearchResults extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const filterData = _.filter(
+      dataSonora,
+      _.omitBy(this.props.filterBy, _.isEmpty),
+    );
     return (
       <SafeAreaView>
+        <Text style={styles.text}>Obras encontradas: {filterData.length}</Text>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <View style={styles.body}>
-            {dataSonora.map((row, i) => {
-              if (i < 10) {
-                return (
-                  <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}> - {row.TIPO_OBRA}</Text>
-                    <Text style={styles.sectionDescription}>
-                      Total: ${formatNumber(row.TOTAL_CONTRATO)}
-                    </Text>
-                    <Text style={styles.sectionDescription}>
-                      Modalidad: {row.MODALIDAD}
-                    </Text>
-                  </View>
-                );
-              }
+            {filterData.map(row => {
+              return (
+                <View style={styles.sectionContainer}>
+                  <Text style={styles.sectionTitle}> - {row.TIPO_OBRA}</Text>
+                  <Text style={styles.sectionDescription}>
+                    Total: ${formatNumber(row.TOTAL_CONTRATO)}
+                  </Text>
+                  <Text style={styles.sectionDescription}>
+                    Modalidad: {row.MODALIDAD}
+                  </Text>
+                </View>
+              );
             })}
           </View>
         </ScrollView>
@@ -57,5 +64,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     color: Colors.dark,
+  },
+  text: {
+    fontSize: 20,
+    padding: 8,
+    textAlign: 'center',
   },
 });
