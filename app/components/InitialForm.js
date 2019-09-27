@@ -1,8 +1,10 @@
 import SearchResults from './SearchResults';
 import React, {Component} from 'react';
+import RNPickerSelect from 'react-native-picker-select';
+import dataSonora from '../../obrasSonora2018.json';
+import _ from 'lodash';
 import {
   StyleSheet,
-  TextInput,
   Text,
   View,
   SafeAreaView,
@@ -23,21 +25,33 @@ export default class InitialForm extends Component {
       RESIDENTE: '',
       FECHA_CONTRATO: '',
       FECHA_ENTREGA: '',
-      submited: true,
+      submited: false,
+      MUNICIPIOSList: _.uniqBy(dataSonora, 'MUNICIPIO').map(d => {
+        return {label: d.MUNICIPIO, value: d.MUNICIPIO};
+      }),
     };
   }
 
   render() {
-    if (!this.props.submited) {
+    if (!this.state.submited) {
       return (
         <SafeAreaView>
+          <Text style={styles.text}>
+            Selecciona los datos deseados para filtrar:
+          </Text>
           <View>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Your name"
-              maxLength={20}
+            <RNPickerSelect
+              onValueChange={MUNICIPIO => this.setState({MUNICIPIO})}
+              placeholder={{label: 'Selecciona un municipio...'}}
+              style={pickerStyle}
+              items={this.state.MUNICIPIOSList}
             />
-            <TouchableOpacity style={styles.saveButton}>
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={() => {
+                // eslint-disable-next-line no-alert
+                alert(this.state.MUNICIPIO);
+              }}>
               <Text style={styles.saveButtonText}>Save</Text>
             </TouchableOpacity>
           </View>
@@ -62,6 +76,12 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
+  text: {
+    fontSize: 25,
+    paddingLeft: 20,
+    paddingRight: 20,
+    textAlign: 'center',
+  },
   saveButton: {
     borderWidth: 1,
     borderColor: '#007BFF',
@@ -75,3 +95,33 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+const pickerStyle = {
+  inputIOS: {
+    color: '#000',
+    paddingTop: 13,
+    fontSize: 25,
+    paddingHorizontal: 10,
+    paddingBottom: 12,
+  },
+  inputAndroid: {
+    color: '#000',
+    fontSize: 25,
+  },
+  placeholderColor: '#CCCCCC',
+  underline: {borderTopWidth: 0},
+  icon: {
+    position: 'absolute',
+    backgroundColor: 'transparent',
+    borderTopWidth: 5,
+    borderTopColor: '#00000099',
+    borderRightWidth: 5,
+    borderRightColor: 'transparent',
+    borderLeftWidth: 5,
+    borderLeftColor: 'transparent',
+    width: 0,
+    height: 0,
+    top: 20,
+    right: 15,
+  },
+};
