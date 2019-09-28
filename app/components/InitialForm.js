@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import SearchResults from './SearchResults';
 import React, {Component} from 'react';
 import RNPickerSelect from 'react-native-picker-select';
@@ -9,6 +10,7 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 export default class InitialForm extends Component {
@@ -24,9 +26,6 @@ export default class InitialForm extends Component {
       ORGANISMO: '',
       ORGANISMOSList: this.makeItems('ORGANISMO'),
       CONTRATISTA: '',
-      CONTRATISTASList: this.makeItems('CONTRATISTA'),
-      RESIDENTE: '',
-      RESIDENTESList: this.makeItems('RESIDENTE'),
       submited: false,
     };
   }
@@ -37,8 +36,6 @@ export default class InitialForm extends Component {
       TIPO_CONTRATO: '',
       TIPO_OBRA: '',
       ORGANISMO: '',
-      CONTRATISTA: '',
-      RESIDENTE: '',
       submited: false,
     });
   }
@@ -52,47 +49,45 @@ export default class InitialForm extends Component {
   render() {
     if (!this.state.submited) {
       return (
-        <SafeAreaView>
-          <Text style={styles.text}>
-            Selecciona los datos deseados para filtrar:
-          </Text>
-          <RNPickerSelect
-            onValueChange={MUNICIPIO => this.setState({MUNICIPIO})}
-            placeholder={{label: 'Selecciona un municipio...'}}
-            style={pickerStyle}
-            items={this.state.MUNICIPIOSList}
-          />
-          <RNPickerSelect
-            onValueChange={TIPO_CONTRATO => this.setState({TIPO_CONTRATO})}
-            placeholder={{label: 'Selecciona un tipo de contrado...'}}
-            style={pickerStyle}
-            items={this.state.TIPO_CONTRATOSList}
-          />
-          <RNPickerSelect
-            onValueChange={TIPO_OBRA => this.setState({TIPO_OBRA})}
-            placeholder={{label: 'Selecciona un tipo de obras...'}}
-            style={pickerStyle}
-            items={this.state.TIPO_OBRASList}
-          />
-          <RNPickerSelect
-            onValueChange={ORGANISMO => this.setState({ORGANISMO})}
-            placeholder={{label: 'Selecciona un organismo...'}}
-            style={pickerStyle}
-            items={this.state.ORGANISMOSList}
-          />
-          <RNPickerSelect
-            onValueChange={CONTRATISTA => this.setState({CONTRATISTA})}
-            placeholder={{label: 'Selecciona un contratista...'}}
-            style={pickerStyle}
-            items={this.state.CONTRATISTASList}
-          />
-          <RNPickerSelect
-            onValueChange={RESIDENTE => this.setState({RESIDENTE})}
-            placeholder={{label: 'Selecciona un residente...'}}
-            style={pickerStyle}
-            items={this.state.RESIDENTESList}
-          />
-          <View>
+        <View style={{flex: 1}}>
+          <View style={{flex: 1}} />
+          <View style={styles.homeButton}>
+            <Image source={require('../assets/home.png')} />
+          </View>
+          <View style={{flex: 1}} />
+          <View style={{flex: 2}}>
+            <Text style={styles.text}>
+              Selecciona los datos deseados para filtrar:
+            </Text>
+          </View>
+          <View style={{flex: 3}}>
+            <RNPickerSelect
+              onValueChange={MUNICIPIO => this.setState({MUNICIPIO})}
+              placeholder={{label: 'Selecciona un municipio...'}}
+              style={pickerStyle}
+              items={this.state.MUNICIPIOSList}
+            />
+            <RNPickerSelect
+              onValueChange={TIPO_CONTRATO => this.setState({TIPO_CONTRATO})}
+              placeholder={{label: 'Selecciona un tipo de contrado...'}}
+              style={pickerStyle}
+              items={this.state.TIPO_CONTRATOSList}
+            />
+            <RNPickerSelect
+              onValueChange={TIPO_OBRA => this.setState({TIPO_OBRA})}
+              placeholder={{label: 'Selecciona un tipo de obras...'}}
+              style={pickerStyle}
+              items={this.state.TIPO_OBRASList}
+            />
+            <RNPickerSelect
+              onValueChange={ORGANISMO => this.setState({ORGANISMO})}
+              placeholder={{label: 'Selecciona un organismo...'}}
+              style={pickerStyle}
+              items={this.state.ORGANISMOSList}
+            />
+          </View>
+          <View style={{flex: 1}} />
+          <View style={{flex: 5}}>
             <TouchableOpacity
               style={styles.saveButton}
               onPress={() => {
@@ -101,17 +96,17 @@ export default class InitialForm extends Component {
               <Text style={styles.saveButtonText}>Buscar Obras</Text>
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+        </View>
       );
     } else {
       return (
         <SafeAreaView>
           <TouchableOpacity
-            style={styles.saveButton}
+            style={styles.homeButton}
             onPress={() => {
               this.resetSelection();
             }}>
-            <Text style={styles.saveButtonText}>Regresar</Text>
+            <Image source={require('../assets/home.png')} />
           </TouchableOpacity>
           <SearchResults
             filterBy={{
@@ -154,6 +149,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#007BFF',
     padding: 15,
     margin: 5,
+  },
+  homeButton: {
+    borderWidth: 1,
+    borderColor: '#007BFF',
+    backgroundColor: '#007BFF',
+    padding: 15,
+    margin: 5,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   saveButtonText: {
     color: '#FFFFFF',
