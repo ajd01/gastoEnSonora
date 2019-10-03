@@ -94,6 +94,8 @@ export default class SearchResults extends Component {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+    marginTop: '1%',
+    marginBottom: '35%',
   },
   body: {
     backgroundColor: Colors.white,
