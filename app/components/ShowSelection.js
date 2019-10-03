@@ -27,27 +27,26 @@ export default class ShowSelection extends Component {
           Obra: {o.NUM_CONTRATO}
         </Text>
         <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
+          behaviour="height"
+          keyboardVerticalOffset={64}
           style={styles.scrollView}>
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>{o.TIPO_OBRA}</Text>
-              {this.renderTextStyled(
-                'Total',
-                '$' + formatNumber(o.TOTAL_CONTRATO),
-              )}
-              {this.renderTextStyled('Modalidad', o.MODALIDAD)}
-              {this.renderTextStyled('Objeto', o.OBJETO)}
-              {this.renderTextStyled('Municipio', o.MUNICIPIO)}
-              {this.renderTextStyled('Loclidad', o.LOCALIDAD)}
-              {this.renderTextStyled('Numero de beneficiados', o.BENEFICIADOS)}
-              {this.renderTextStyled('UA Solicitante', o.UA_SOLICITANTE)}
-              {this.renderTextStyled('UA Responsable', o.UA_RESPONSABLE)}
-              {this.renderTextStyled('CONTRATISTA', o.CONTRATISTA)}
-              {this.renderTextStyled('RESIDENTE', o.RESIDENTE)}
-              {this.renderTextStyled('FECHA_CONTRATO', o.FECHA_CONTRATO)}
-              {this.renderTextStyled('FECHA_TERMINO', o.FECHA_TERMINO)}
-            </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>{o.TIPO_OBRA}</Text>
+            {this.renderTextStyled(
+              'Total',
+              '$' + formatNumber(o.TOTAL_CONTRATO),
+            )}
+            {this.renderTextStyled('Modalidad', o.MODALIDAD)}
+            {this.renderTextStyled('Objeto', o.OBJETO)}
+            {this.renderTextStyled('Municipio', o.MUNICIPIO)}
+            {this.renderTextStyled('Loclidad', o.LOCALIDAD)}
+            {this.renderTextStyled('Numero de beneficiados', o.BENEFICIADOS)}
+            {this.renderTextStyled('UA Solicitante', o.UA_SOLICITANTE)}
+            {this.renderTextStyled('UA Responsable', o.UA_RESPONSABLE)}
+            {this.renderTextStyled('CONTRATISTA', o.CONTRATISTA)}
+            {this.renderTextStyled('RESIDENTE', o.RESIDENTE)}
+            {this.renderTextStyled('FECHA_CONTRATO', o.FECHA_CONTRATO)}
+            {this.renderTextStyled('FECHA_TERMINO', o.FECHA_TERMINO)}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -58,6 +57,8 @@ export default class ShowSelection extends Component {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+    marginTop: '1%',
+    marginBottom: '35%',
   },
   body: {
     backgroundColor: Colors.white,

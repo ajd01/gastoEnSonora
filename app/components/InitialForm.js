@@ -87,6 +87,7 @@ export default class InitialForm extends Component {
             />
           </View>
           <View style={{flex: 1}} />
+          <View style={{flex: 1}} />
           <View style={{flex: 5}}>
             <TouchableOpacity
               style={styles.saveButton}
