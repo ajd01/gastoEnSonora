@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {formatNumber} from '../../app/utils';
-import _ from 'lodash';
 import {SafeAreaView, StyleSheet, View, Text, ScrollView} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
